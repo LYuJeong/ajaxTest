@@ -6,40 +6,41 @@
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <script>
 $(document).ready(function(){
-	$("#listButton").click(listFunc);
+   $("#listButton").click(listFunc);
 });
 function listFunc(){
-	$.ajax({
-		url: "/member/list",
-		dataType:"json",
-	    success: function(data) {
-	    	console.log(data);
-	    	$("<ol/>",{id:"memberOL"}).appendTo("#listContainer");
-	    	$.each(data.list,(index,member)=>{
-	    		$( "<li/>",{id:"liTag"+index}).appendTo("#memberOL");
-	    		$( "<a/>", {
-	    			href:"#",
-	    		    html: member.id,
-	    		    click:memberDetailFunc
-	    		}).appendTo("#liTag"+index);
-	    	});
-	    }
-	});
+   $.ajax({
+      url: "/member/list",
+      dataType:"json",
+       success: function(data) {
+          console.log(data);
+          $("<ol/>",{id:"memberOL"}).appendTo("#listContainer");
+          $.each(data.list,(index,member)=>{
+             $( "<li/>",{id:"liTag"+index}).appendTo("#memberOL");
+             $( "<a/>", {
+                href:"#",
+                 html: member.id,
+                 click:memberDetailFunc
+             }).appendTo("#liTag"+index);
+          });
+       }
+   });
 }
 function memberDetailFunc(){
-	const aTag=this;
-	$.ajax({
-		url: "/member/detail",
-		data:{"id":$(this).html()},
-		dataType:"json",
-	    success: function(data) {
-	    	$(aTag).append(data.member.pw);
-	    }		
-	});
+   const aTag=this;
+   $.ajax({
+      url: "/member/detail",
+      data:{"id":$(this).html()},
+      dataType:"json",
+       success: function(data) {
+          $(aTag).append(data.member.pw);
+       }      
+   });
 }
 </script>
 </head>
 <body>
+<a href="/member/grid-list">회원리스트</a><br/>
 <a href="#" id="listButton">회원리스트</a><br/>
 <div id="listContainer"></div>
 </body>
